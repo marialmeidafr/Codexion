@@ -71,7 +71,7 @@ typedef struct s_table
 
 typedef struct s_coder
 {
-    int                 id_coder;
+    int                 id_coders;
     int                 compiles_finish;
     long                last_compile_start;
     t_dongle            *left_dongle;
@@ -91,5 +91,22 @@ long ft_atol(const char *str);
 
 //parser
 int parser(int ac, char *av[], t_config *config);
+
+//scheduler
+void        insert_on_heap_sift_up(t_heap *heap, t_request *add_request);
+void        find_smallest(t_heap *heap, int current);
+void        sift_up(t_heap *heap, int index);
+void        remove_coder_on_heap(t_heap *heap, int id_coders);
+int         heap_insert_add_back(t_heap *heap, t_request *new_request);
+int         compare_index(t_heap *heap, int a, int b);
+void        swap_nodes(t_heap *heap, int a, int b);
+t_request   heap_pop_min(t_heap *heap);
+
+//init
+void free_table(t_table *table);
+int init_table(t_table *table, t_config *config);
+
+
+
 
 #endif
