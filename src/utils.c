@@ -50,3 +50,23 @@ long ft_atol(const char *str)
     }
     return(signal * result);
 }
+
+long get_timestamp_ms(void)
+{
+    struct timeval tv;
+    long total_em_ms;
+
+    gettimeofday(&tv, NULL);
+    total_em_ms = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+    return (total_em_ms);
+}
+
+void log_state(t_table *table, int coder_id, char *msg)
+{
+    long timestamp;
+
+    pthread_mutex_lock(&table->write_mutex);
+    timestamp = get_timestamp_ms() - table->start_time;
+    printf("%ld %d %s\n", timestamp, coder_id, msg);
+    pthread_mutex_unlock(&table->write_mutex);
+}

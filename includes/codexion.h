@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <sys/time.h>
 
 typedef enum e_sched
 {
@@ -88,6 +88,8 @@ typedef struct s_coder
 int ft_isdigit(int c);
 int ft_strcmp(char *s1, char *s2);
 long ft_atol(const char *str);
+long get_timestamp_ms(void);
+void log_state(t_table *table, int coder_id, char *msg);
 
 //parser
 int parser(int ac, char *av[], t_config *config);
@@ -101,6 +103,9 @@ int         heap_insert_add_back(t_heap *heap, t_request *new_request);
 int         compare_index(t_heap *heap, int a, int b);
 void        swap_nodes(t_heap *heap, int a, int b);
 t_request   heap_pop_min(t_heap *heap);
+
+//scheduler thread
+void *scheduler_routine(void *arg);
 
 //init
 void free_table(t_table *table);

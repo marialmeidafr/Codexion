@@ -12,6 +12,8 @@ int heap_insert_add_back(t_heap *heap, t_request *new_request)
 
 int compare_index(t_heap *heap, int a, int b)
 {
+    if (heap->requests[a].priority_request == heap->requests[b].priority_request)
+        return (heap->requests[a].id_coders > heap->requests[b].id_coders);
     return (heap->requests[a].priority_request > heap->requests[b].priority_request);
 }
 
