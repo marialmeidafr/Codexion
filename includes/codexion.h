@@ -56,10 +56,10 @@ typedef struct s_dongle
 
 typedef struct s_table
 {
-    t_config *config;
-    t_dongle *dongles;
-    t_coder *coders;
-    long    start_time;
+    t_config            *config;
+    t_dongle            *dongles;
+    t_coder             *coders;
+    long                start_time;
     int					simulation_over;
 	pthread_mutex_t		write_mutex;
 	pthread_mutex_t		simulation_mutex;
@@ -71,7 +71,7 @@ typedef struct s_table
 
 typedef struct s_coder
 {
-    int                 id_coders;
+    int                 id_coder;
     int                 compiles_finish;
     long                last_compile_start;
     t_dongle            *left_dongle;
@@ -113,9 +113,25 @@ int try_take_dongles(t_coder *coder);
 void free_table(t_table *table);
 int init_table(t_table *table, t_config *config);
 
-//coder actions
+//coder actions - utils
 void request_compile(t_coder *coder);
 void release_dongles(t_coder *coder);
 
+//coder actions
+void	do_compile(t_coder *coder);
+void	do_debug(t_coder *coder);
+void 	do_refactor(t_coder *coder);
+int must_stop(t_coder *coder);
+void *coder_routine(void *arg);
+
+//monitor
+void stop_simulation(t_table *table);
+int check_bournout(t_table *table);
+void *monitor_routine(void *arg);
+int all_compiled_enough(t_table *table);
+void wake_up_all_coders(t_table *table);
+
+//simulation
+int start_simulation(t_table *table);
 
 #endif

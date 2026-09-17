@@ -31,15 +31,14 @@ void scheduler_dispatch(t_table *table)
         {
             coder_id = table->scheduler_queue.requests[i].id_coders;
             coder = &table->coders[coder_id - 1];
-            if(try_take_dongles(coder) == 1)
+            if (try_take_dongles(coder) == 1)
             {
                 remove_coder_on_heap(&table->scheduler_queue, coder_id);
                 dispatched_someone = 1;
                 pthread_mutex_lock(&coder->mutex_compile);
                 coder->compile_authorized = 1;
-                phtread_cond_signal(&coder->cond_compile)
+                phtread_cond_signal(&coder->cond_compile);
                 pthread_mutex_unlock(&coder->mutex_compile);
-
             }
             else
                 i++;
@@ -57,11 +56,11 @@ int try_take_dongles(t_coder *coder)
 
     left_dongle_ok = (coder->left_dongle->in_use == 0)
                     && (now >= coder->left_dongle->table_return_time
-                        + coder->config->dongle_cool);
+                        + coder->config->dongle_cooldown);
     
     right_dongle_ok = (coder->right_dongle->in_use == 0)
                     && (now >= coder->left_dongle->table_return_time
-                        + coder->config->dongle_cool);
+                        + coder->config->dongle_cooldown);
     
     if (left_dongle_ok && right_dongle_ok)
     {

@@ -24,7 +24,7 @@ static void init_coder(t_table *table, t_config *config)
 	j = 0;
 	while(j < config->number_of_coders)
 	{
-		table->coders[j].id_coders = j + 1;
+		table->coders[j].id_coder = j + 1;
         table->coders[j].compiles_finish = 0;
         table->coders[j].last_compile_start = 0;
         table->coders[j].config = config;

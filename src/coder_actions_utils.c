@@ -17,7 +17,7 @@ void request_compile(t_coder *coder)
 	pthread_cond_signal(&coder->table->scheduler_cond);
 	pthread_mutex_unlock(&coder->scheduler_mutex);
 	pthread_mutex_lock(&coder->mutex_compile);
-	while (coder->compile_authorized == 0)
+	while (coder->compile_authorized == 0 && coder->table->simulation_over == 0)
 		pthread_cond_wait(&coder->cond_compile, &coder->mutex_compile);
 	pthread_mutex_unlock(&coder->mutex_compile);
 }
