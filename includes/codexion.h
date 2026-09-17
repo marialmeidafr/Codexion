@@ -106,12 +106,16 @@ t_request   heap_pop_min(t_heap *heap);
 
 //scheduler thread
 void *scheduler_routine(void *arg);
+void scheduler_dispatch(t_table *table);
+int try_take_dongles(t_coder *coder);
 
 //init
 void free_table(t_table *table);
 int init_table(t_table *table, t_config *config);
 
-
+//coder actions
+void request_compile(t_coder *coder);
+void release_dongles(t_coder *coder);
 
 
 #endif
