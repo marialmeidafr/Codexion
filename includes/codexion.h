@@ -11,7 +11,8 @@
 typedef enum e_sched
 {
 	FIFO,
-	EDF
+	EDF,
+    LIFO
 }						t_sched;
 
 typedef struct s_table	t_table;

@@ -2,14 +2,22 @@
 
 void *scheduler_routine(void *arg)
 {
-    t_table *table;
+    t_table         *table;
+    struct timespec  timeout;
 
     table = (t_table *)arg;
     pthread_mutex_lock(&table->scheduler_mutex);
-    while(table->simulation_over == 0)
+    while (table->simulation_over == 0)
     {
         scheduler_dispatch(table);
-        pthread_cond_wait(&table->scheduler_cond, &table->scheduler_mutex);
+        clock_gettime(CLOCK_REALTIME, &timeout);
+        timeout.tv_nsec += 5000000;   // +5ms, em nanossegundos
+        if (timeout.tv_nsec >= 1000000000)
+        {
+            timeout.tv_sec += 1;
+            timeout.tv_nsec -= 1000000000;
+        }
+        pthread_cond_timedwait(&table->scheduler_cond, &table->scheduler_mutex, &timeout);
     }
     pthread_mutex_unlock(&table->scheduler_mutex);
     return (NULL);
@@ -37,7 +45,7 @@ void scheduler_dispatch(t_table *table)
                 dispatched_someone = 1;
                 pthread_mutex_lock(&coder->mutex_compile);
                 coder->compile_authorized = 1;
-                phtread_cond_signal(&coder->cond_compile);
+                pthread_cond_signal(&coder->cond_compile);
                 pthread_mutex_unlock(&coder->mutex_compile);
             }
             else
@@ -59,7 +67,7 @@ int try_take_dongles(t_coder *coder)
                         + coder->config->dongle_cooldown);
     
     right_dongle_ok = (coder->right_dongle->in_use == 0)
-                    && (now >= coder->left_dongle->table_return_time
+                    && (now >= coder->right_dongle->table_return_time
                         + coder->config->dongle_cooldown);
     
     if (left_dongle_ok && right_dongle_ok)
