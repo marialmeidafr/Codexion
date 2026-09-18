@@ -1,0 +1,273 @@
+==932421== Helgrind, a thread error detector
+==932421== Copyright (C) 2007-2017, and GNU GPL'd, by OpenWorks LLP et al.
+==932421== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==932421== Command: ./codexion 5 3000 200 200 200 10 400 fifo
+==932421== 
+==932421== ---Thread-Announcement------------------------------------------
+==932421== 
+==932421== Thread #2 was created
+==932421==    at 0x499FA83: clone (clone.S:76)
+==932421==    by 0x49A097E: __clone_internal (clone-internal.c:83)
+==932421==    by 0x490E698: create_thread (pthread_create.c:295)
+==932421==    by 0x490F1BF: pthread_create@@GLIBC_2.34 (pthread_create.c:828)
+==932421==    by 0x4853767: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==932421==    by 0x40309F: start_simulation (in /home/mariaalm/Codexion/codexion)
+==932421==    by 0x4012F0: main (in /home/mariaalm/Codexion/codexion)
+==932421== 
+==932421== ----------------------------------------------------------------
+==932421== 
+==932421== Thread #2: pthread_cond_{signal,broadcast}: dubious: associated lock is not held by any thread
+==932421==    at 0x48513D6: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==932421==    by 0x490DFEE: __pthread_cond_wait_common (pthread_cond_wait.c:516)
+==932421==    by 0x490DFEE: pthread_cond_timedwait@@GLIBC_2.3.2 (pthread_cond_wait.c:652)
+==932421==    by 0x48545D4: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==932421==    by 0x402452: scheduler_routine (in /home/mariaalm/Codexion/codexion)
+==932421==    by 0x485396A: ??? (in /usr/libexec/valgrind/vgpreload_helgrind-amd64-linux.so)
+==932421==    by 0x490EA82: start_thread (pthread_create.c:442)
+==932421==    by 0x499FA93: clone (clone.S:100)
+==932421== 
+15 1 has taken a dongle
+19 1 has taken a dongle
+21 1 is compiling
+25 3 has taken a dongle
+25 3 has taken a dongle
+25 3 is compiling
+222 1 is debugging
+226 3 is debugging
+423 1 is refactoring
+426 3 is refactoring
+624 5 has taken a dongle
+624 5 has taken a dongle
+625 5 is compiling
+627 2 has taken a dongle
+627 2 has taken a dongle
+628 2 is compiling
+825 5 is debugging
+828 2 is debugging
+1025 5 is refactoring
+1029 2 is refactoring
+1226 4 has taken a dongle
+1226 4 has taken a dongle
+1226 4 is compiling
+1229 1 has taken a dongle
+1229 1 has taken a dongle
+1230 1 is compiling
+1427 4 is debugging
+1430 1 is debugging
+1627 4 is refactoring
+1631 1 is refactoring
+1828 3 has taken a dongle
+1828 3 has taken a dongle
+1828 3 is compiling
+1831 5 has taken a dongle
+1831 5 has taken a dongle
+1832 5 is compiling
+2029 3 is debugging
+2033 5 is debugging
+2229 3 is refactoring
+2233 5 is refactoring
+2430 2 has taken a dongle
+2430 2 has taken a dongle
+2430 2 is compiling
+2434 4 has taken a dongle
+2434 4 has taken a dongle
+2434 4 is compiling
+2631 2 is debugging
+2635 4 is debugging
+2831 2 is refactoring
+2835 4 is refactoring
+3032 1 has taken a dongle
+3032 1 has taken a dongle
+3032 1 is compiling
+3036 3 has taken a dongle
+3036 3 has taken a dongle
+3036 3 is compiling
+3233 1 is debugging
+3236 3 is debugging
+3433 1 is refactoring
+3437 3 is refactoring
+3634 5 has taken a dongle
+3634 5 has taken a dongle
+3635 5 is compiling
+3638 2 has taken a dongle
+3638 2 has taken a dongle
+3638 2 is compiling
+3835 5 is debugging
+3838 2 is debugging
+4035 5 is refactoring
+4039 2 is refactoring
+4236 4 has taken a dongle
+4236 4 has taken a dongle
+4236 4 is compiling
+4240 1 has taken a dongle
+4240 1 has taken a dongle
+4240 1 is compiling
+4437 4 is debugging
+4441 1 is debugging
+4637 4 is refactoring
+4641 1 is refactoring
+4837 3 has taken a dongle
+4837 3 has taken a dongle
+4838 3 is compiling
+4842 5 has taken a dongle
+4842 5 has taken a dongle
+4843 5 is compiling
+5038 3 is debugging
+5043 5 is debugging
+5238 3 is refactoring
+5243 5 is refactoring
+5439 2 has taken a dongle
+5439 2 has taken a dongle
+5440 2 is compiling
+5444 4 has taken a dongle
+5444 4 has taken a dongle
+5445 4 is compiling
+5640 2 is debugging
+5645 4 is debugging
+5840 2 is refactoring
+5845 4 is refactoring
+6041 1 has taken a dongle
+6041 1 has taken a dongle
+6041 1 is compiling
+6046 3 has taken a dongle
+6046 3 has taken a dongle
+6046 3 is compiling
+6242 1 is debugging
+6247 3 is debugging
+6442 1 is refactoring
+6447 3 is refactoring
+6642 5 has taken a dongle
+6642 5 has taken a dongle
+6642 5 is compiling
+6648 2 has taken a dongle
+6648 2 has taken a dongle
+6648 2 is compiling
+6843 5 is debugging
+6849 2 is debugging
+7043 5 is refactoring
+7049 2 is refactoring
+7244 4 has taken a dongle
+7244 4 has taken a dongle
+7244 4 is compiling
+7249 1 has taken a dongle
+7249 1 has taken a dongle
+7250 1 is compiling
+7445 4 is debugging
+7450 1 is debugging
+7645 4 is refactoring
+7651 1 is refactoring
+7846 3 has taken a dongle
+7846 3 has taken a dongle
+7846 3 is compiling
+7851 5 has taken a dongle
+7851 5 has taken a dongle
+7851 5 is compiling
+8047 3 is debugging
+8052 5 is debugging
+8247 3 is refactoring
+8252 5 is refactoring
+8448 2 has taken a dongle
+8448 2 has taken a dongle
+8448 2 is compiling
+8453 4 has taken a dongle
+8453 4 has taken a dongle
+8453 4 is compiling
+8649 2 is debugging
+8654 4 is debugging
+8849 2 is refactoring
+8854 4 is refactoring
+9048 1 has taken a dongle
+9048 1 has taken a dongle
+9048 1 is compiling
+9055 3 has taken a dongle
+9055 3 has taken a dongle
+9055 3 is compiling
+9249 1 is debugging
+9255 3 is debugging
+9450 1 is refactoring
+9456 3 is refactoring
+9650 5 has taken a dongle
+9650 5 has taken a dongle
+9651 5 is compiling
+9656 2 has taken a dongle
+9656 2 has taken a dongle
+9656 2 is compiling
+9851 5 is debugging
+9857 2 is debugging
+10051 5 is refactoring
+10057 2 is refactoring
+10253 4 has taken a dongle
+10253 4 has taken a dongle
+10253 4 is compiling
+10258 1 has taken a dongle
+10258 1 has taken a dongle
+10258 1 is compiling
+10453 4 is debugging
+10459 1 is debugging
+10654 4 is refactoring
+10659 1 is refactoring
+10855 3 has taken a dongle
+10855 3 has taken a dongle
+10856 3 is compiling
+10860 5 has taken a dongle
+10860 5 has taken a dongle
+10861 5 is compiling
+11056 3 is debugging
+11061 5 is debugging
+11257 3 is refactoring
+11261 5 is refactoring
+11456 2 has taken a dongle
+11456 2 has taken a dongle
+11456 2 is compiling
+11462 4 has taken a dongle
+11462 4 has taken a dongle
+11462 4 is compiling
+11656 2 is debugging
+11663 4 is debugging
+11857 2 is refactoring
+11863 4 is refactoring
+12056 1 has taken a dongle
+12056 1 has taken a dongle
+12056 1 is compiling
+12062 3 has taken a dongle
+12063 3 has taken a dongle
+12063 3 is compiling
+12257 1 is debugging
+12263 3 is debugging
+12457 1 is refactoring
+12464 3 is refactoring
+12657 5 has taken a dongle
+12657 5 has taken a dongle
+12658 5 is compiling
+12663 2 has taken a dongle
+12663 2 has taken a dongle
+12663 2 is compiling
+12858 5 is debugging
+12864 2 is debugging
+13059 5 is refactoring
+13064 2 is refactoring
+13258 4 has taken a dongle
+13259 4 has taken a dongle
+13259 4 is compiling
+13265 1 has taken a dongle
+13265 1 has taken a dongle
+13265 1 is compiling
+13459 4 is debugging
+13660 4 is refactoring
+13860 3 has taken a dongle
+13860 3 has taken a dongle
+13861 3 is compiling
+13866 5 has taken a dongle
+13866 5 has taken a dongle
+13866 5 is compiling
+14465 2 has taken a dongle
+14465 2 has taken a dongle
+14465 2 is compiling
+14470 4 has taken a dongle
+14470 4 has taken a dongle
+14470 4 is compiling
+==932421== 
+==932421== Use --history-level=approx or =none to gain increased speed, at
+==932421== the cost of reduced accuracy of conflicting-access information
+==932421== For lists of detected and suppressed errors, rerun with: -s
+==932421== ERROR SUMMARY: 8 errors from 1 contexts (suppressed: 404991 from 198)
