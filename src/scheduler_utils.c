@@ -6,6 +6,7 @@ int heap_insert_add_back(t_heap *heap, t_request *new_request)
         return (0);
     heap->requests[heap->queue_len].id_coders = new_request->id_coders;
     heap->requests[heap->queue_len].priority_request = new_request->priority_request;
+    heap->requests[heap->queue_len].sequence = new_request->sequence;
     heap->queue_len++;
     return (1);
 }
@@ -13,7 +14,7 @@ int heap_insert_add_back(t_heap *heap, t_request *new_request)
 int compare_index(t_heap *heap, int a, int b)
 {
     if (heap->requests[a].priority_request == heap->requests[b].priority_request)
-        return (heap->requests[a].id_coders > heap->requests[b].id_coders);
+        return (heap->requests[a].sequence > heap->requests[b].sequence);
     return (heap->requests[a].priority_request > heap->requests[b].priority_request);
 }
 

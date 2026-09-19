@@ -35,62 +35,43 @@ void *scheduler_routine(void *arg)
     return (NULL);
 }
 
-void scheduler_dispatch(t_table *table)
+static void grant_request(t_coder *coder)
 {
-    int i;
-    int dispatched_someone;
-    int coder_id;
-    t_coder *coder;
+    pthread_mutex_lock(&coder->mutex_compile);
+    coder->compile_authorized = 1;
+    pthread_cond_signal(&coder->cond_compile);
+    pthread_mutex_unlock(&coder->mutex_compile);
+}
 
-    dispatched_someone = 1;
-    while (dispatched_someone == 1)
+static void requeue_pending(t_table *table, t_heap *pending)
+{
+    t_request req;
+
+    while (pending->queue_len > 0)
     {
-        dispatched_someone = 0;
-        i = 0;
-        while (i < table->scheduler_queue.queue_len)
-        {
-            coder_id = table->scheduler_queue.requests[i].id_coders;
-            coder = &table->coders[coder_id - 1];
-            if (try_take_dongles(coder) == 1)
-            {
-                remove_coder_on_heap(&table->scheduler_queue, coder_id);
-                dispatched_someone = 1;
-                pthread_mutex_lock(&coder->mutex_compile);
-                coder->compile_authorized = 1;
-                pthread_cond_signal(&coder->cond_compile);
-                pthread_mutex_unlock(&coder->mutex_compile);
-            }
-            else
-            {
-                fprintf(stderr, "DEBUG: dispatch failed for coder %d (in queue, dongles busy)\n", coder_id);
-                i++;
-            }
-        }
+        req = heap_pop_min(pending);
+        insert_on_heap_sift_up(&table->scheduler_queue, &req);
     }
 }
 
-int try_take_dongles(t_coder *coder)
+void scheduler_dispatch(t_table *table)
 {
-    long now;
-    int left_dongle_ok;
-    int right_dongle_ok;
+    t_heap      pending;
+    t_request   req;
+    t_coder     *coder;
 
-    if (coder->left_dongle == coder->right_dongle)
-        return (0);
-    now = get_timestamp_ms();
-    left_dongle_ok = (coder->left_dongle->in_use == 0)
-                    && (now >= coder->left_dongle->table_return_time
-                        + coder->config->dongle_cooldown);
-    right_dongle_ok = (coder->right_dongle->in_use == 0)
-                    && (now >= coder->right_dongle->table_return_time
-                        + coder->config->dongle_cooldown);
-    if (left_dongle_ok && right_dongle_ok)
+    pending.requests = malloc(sizeof(t_request) * table->scheduler_queue.queue_limit);
+    pending.queue_len = 0;
+    pending.queue_limit = table->scheduler_queue.queue_limit;
+    while (table->scheduler_queue.queue_len > 0)
     {
-        coder->left_dongle->in_use = 1;
-        log_state(coder->table, coder->id_coder, "has taken a dongle");
-        coder->right_dongle->in_use = 1;
-        log_state(coder->table, coder->id_coder, "has taken a dongle");
-        return (1);
+        req = heap_pop_min(&table->scheduler_queue);
+        coder = &table->coders[req.id_coders - 1];
+        if (try_take_dongles(coder) == 1)
+            grant_request(coder);
+        else
+            insert_on_heap_sift_up(&pending, &req);
     }
-    return (0);
+    requeue_pending(table, &pending);
+    free(pending.requests);
 }

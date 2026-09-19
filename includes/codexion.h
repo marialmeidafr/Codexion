@@ -36,6 +36,7 @@ typedef struct s_request
 {
     int id_coders;
     long priority_request;
+    long sequence;
 }                       t_request;
 
 typedef struct s_heap
@@ -61,6 +62,7 @@ typedef struct s_table
     t_dongle            *dongles;
     t_coder             *coders;
     long                start_time;
+    long                request_sequence;
     int					simulation_over;
 	pthread_mutex_t		write_mutex;
 	pthread_mutex_t		simulation_mutex;

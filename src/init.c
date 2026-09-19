@@ -90,6 +90,7 @@ int init_table(t_table *table, t_config *config)
 	table->config = config;
     table->start_time = 0;
     table->simulation_over = 0;
+	table->request_sequence = 0;
 	pthread_mutex_init(&table->write_mutex, NULL);
 	pthread_mutex_init(&table->simulation_mutex, NULL);
 	pthread_cond_init(&table->simulation_cond, NULL);

@@ -10,6 +10,7 @@ SRCS = src/main.c \
        src/scheduler.c \
        src/scheduler_utils.c \
        src/scheduler_thread.c \
+       src/scheduler_thread_utils.c \
        src/coder_actions.c \
        src/coder_actions_utils.c \
        src/monitor.c \
