@@ -37,6 +37,7 @@ typedef struct s_request
     int id_coders;
     long priority_request;
     long sequence;
+    int  fail_count;
 }                       t_request;
 
 typedef struct s_heap

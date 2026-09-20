@@ -8,6 +8,7 @@ static void push_request(t_coder *coder, long priority)
     request.id_coders = coder->id_coder;
     request.priority_request = priority;
     request.sequence = coder->table->request_sequence++;
+    request.fail_count = 0;
     insert_on_heap_sift_up(&coder->table->scheduler_queue, &request);
     pthread_cond_signal(&coder->table->scheduler_cond);
     pthread_mutex_unlock(&coder->table->scheduler_mutex);

@@ -70,7 +70,10 @@ void scheduler_dispatch(t_table *table)
         if (try_take_dongles(coder) == 1)
             grant_request(coder);
         else
+        {
+            req.fail_count++;
             insert_on_heap_sift_up(&pending, &req);
+        }
     }
     requeue_pending(table, &pending);
     free(pending.requests);
