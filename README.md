@@ -62,7 +62,7 @@ Every state change is logged as `timestamp_in_ms coder_id message`, e.g.:
 ## Resources
 
 - POSIX Threads Programming (LLNL): https://hpc-tutorials.llnl.gov/posix/
-- `man` pages for `pthread_create`, `pthread_mutex_lock`, `pthread_cond_wait`, `pthread_cond_timedwait`, `clock_gettime`, `gettimeofday`
+- `man` pages for `pthread_create`, `pthread_mutex_lock`, `pthread_cond_wait`, `clock_gettime`, `gettimeofday`
 - The Little Book of Semaphores, Allen B. Downey — background reading on the dining philosophers problem and classic synchronization patterns
 - Wikipedia: Dining philosophers problem, Priority queue (binary heap) — for the min-heap implementation used by the scheduler
 
@@ -99,8 +99,8 @@ The project uses only local synchronization primitives passed by pointer through
 
 - **`write_mutex`** (one, in `t_table`): protects every call to the logging function, so no two threads can print at the same time.
 - **`scheduler_mutex`** (one, in `t_table`): protects the scheduler's pending-request heap and the shared state of every dongle (`in_use`, cooldown timestamp). All dongle acquisition/release logic runs under this single lock, which is what makes "grant both dongles or none" atomic and deadlock-free.
-- **`scheduler_cond`** (one, in `t_table`): the scheduler thread sleeps on this condition variable (with `pthread_cond_timedwait`, not a plain `pthread_cond_wait`, so it periodically re-checks even if a wakeup was missed) until a coder pushes a new request or releases its dongles.
+- **`scheduler_cond`** (one, in `t_table`): the scheduler thread sleeps on this condition variable (with 'pthread_cond_wait'), so it periodically re-checks even if a wakeup was missed until a coder pushes a new request or releases its dongles.
 - **`mutex_compile` / `cond_compile`** (one pair per coder, in `t_coder`): protect that coder's own `compile_authorized` flag, `last_compile_start`, and `compiles_finish` counter. A coder blocks on its own `cond_compile` while waiting to be authorized to compile; the scheduler signals it directly (not a broadcast) once its two dongles have been granted.
 - **`simulation_mutex` / `simulation_cond`** (one pair, in `t_table`): protect the `simulation_over` flag, which is written once by the monitor thread and read by every other thread to decide when to stop.
 
-Race conditions are avoided by never reading or writing a field shared across threads outside of its owning mutex — for example, a coder's `last_compile_start` is written by that coder's own thread inside `mutex_compile` and read by the monitor thread inside the same mutex, rather than being accessed directly. Thread-safe communication between coders and the monitor is achieved entirely through this pattern: shared state is only ever touched while its corresponding mutex is held, and condition variables are used to avoid busy-waiting while still guaranteeing prompt wakeups (via `pthread_cond_signal`/`pthread_cond_broadcast` paired with `pthread_cond_wait`/`pthread_cond_timedwait`). The absence of data races and deadlocks was additionally verified with `valgrind` (`memcheck` and `helgrind`) across multiple runs.
+Race conditions are avoided by never reading or writing a field shared across threads outside of its owning mutex — for example, a coder's `last_compile_start` is written by that coder's own thread inside `mutex_compile` and read by the monitor thread inside the same mutex, rather than being accessed directly. Thread-safe communication between coders and the monitor is achieved entirely through this pattern: shared state is only ever touched while its corresponding mutex is held, and condition variables are used to avoid busy-waiting while still guaranteeing prompt wakeups (via `pthread_cond_signal`/`pthread_cond_broadcast` paired with `pthread_cond_wait`). The absence of data races and deadlocks was additionally verified with `valgrind` (`memcheck` and `helgrind`) across multiple runs.
