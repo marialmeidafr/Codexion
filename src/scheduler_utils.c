@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:38:14 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/21 17:57:59 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/22 15:26:11 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,15 @@ t_request	heap_pop_min(t_heap *heap)
 	min = heap->requests[0];
 	remove_coder_on_heap(heap, min.id_coders);
 	return (min);
+}
+
+int	init_scheduler_queue(t_table *table, t_config *config)
+{
+	table->scheduler_queue.requests = malloc(sizeof(t_request)
+			* config->number_of_coders);
+	if (table->scheduler_queue.requests == NULL)
+		return (0);
+	table->scheduler_queue.queue_len = 0;
+	table->scheduler_queue.queue_limit = config->number_of_coders;
+	return (1);
 }

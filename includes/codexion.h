@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:38:46 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/21 18:20:51 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/22 15:25:36 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,10 +136,7 @@ void					*ticker_routine(void *arg);
 // init
 void					free_table(t_table *table);
 int						init_table(t_table *table, t_config *config);
-
-int	init_sync(t_table *table);
-int	init_queue(t_table *table, t_config *config);
-int	init_allocations(t_table *table, t_config *config);
+int						init_scheduler_queue(t_table *table, t_config *config);
 
 // coder actions - utils
 void					request_compile(t_coder *coder);

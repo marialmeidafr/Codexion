@@ -37,4 +37,10 @@ re: fclean all
 valgrind: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(ARGS)
 
+helgrind: $(NAME)
+       valgrind --tool=helgrind ./$(NAME) $(ARGS)
+
+drd: $(NAME)
+       valgrind --tool=drd ./$(NAME) $(ARGS)
+
 .PHONY: all clean fclean re
