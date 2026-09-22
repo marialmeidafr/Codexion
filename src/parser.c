@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:38:05 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/21 16:50:41 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/22 16:58:03 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ static int	config_parser(char *av[], t_config *config)
 		config->scheduler = EDF;
 	if (ft_strcmp(av[8], "lifo") == 0)
 		config->scheduler = LIFO;
-	if (config->number_of_coders <= 0 || config->time_to_burnout <= 0
-		|| config->time_to_compile <= 0 || config->time_to_debug <= 0
-		|| config->time_to_refactor <= 0
-		|| config->number_of_compiles_required <= 0
+	if (config->number_of_coders < 0 || config->time_to_burnout < 0
+		|| config->time_to_compile < 0 || config->time_to_debug < 0
+		|| config->time_to_refactor < 0
+		|| config->number_of_compiles_required < 0
 		|| config->dongle_cooldown < 0)
 		return (0);
 	return (1);

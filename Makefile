@@ -38,9 +38,9 @@ valgrind: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) $(ARGS)
 
 helgrind: $(NAME)
-       valgrind --tool=helgrind ./$(NAME) $(ARGS)
+	valgrind --tool=helgrind ./$(NAME) $(ARGS)
 
 drd: $(NAME)
-       valgrind --tool=drd ./$(NAME) $(ARGS)
+	valgrind --tool=drd ./$(NAME) $(ARGS)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re valgrind helgrind drd
