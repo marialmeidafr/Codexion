@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:38:46 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/22 15:25:36 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/23 12:16:31 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_heap
 	t_request			*requests;
 	int					queue_len;
 	int					queue_limit;
+	t_sched				scheduler;
 }						t_heap;
 
 typedef struct s_dongle

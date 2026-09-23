@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:37:39 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/21 16:37:42 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/23 12:12:11 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	request_compile(t_coder *coder)
 
 	if (coder->config->scheduler == FIFO)
 		priority = get_timestamp_ms();
-	else if (coder->config->scheduler == LIFO)
-		priority = -get_timestamp_ms();
 	else
 		priority = coder->last_compile_start + coder->config->time_to_burnout;
 	pthread_mutex_lock(&coder->mutex_compile);

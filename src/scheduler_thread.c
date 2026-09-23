@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:38:11 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/21 16:57:22 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/23 12:08:11 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ static void	grant_request(t_coder *coder)
 {
 	pthread_mutex_lock(&coder->mutex_compile);
 	coder->compile_authorized = 1;
+	coder->last_compile_start = get_timestamp_ms();
+	pthread_mutex_unlock(&coder->mutex_compile);
+	log_state(coder->table, coder->id_coder, "is compiling");
+	pthread_mutex_lock(&coder->mutex_compile);
 	pthread_cond_signal(&coder->cond_compile);
 	pthread_mutex_unlock(&coder->mutex_compile);
 }

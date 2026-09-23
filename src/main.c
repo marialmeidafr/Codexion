@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:37:59 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/22 16:58:20 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/22 18:53:00 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char *av[])
 		return (1);
 	}
 	if (config.number_of_coders == 0)
-        return (0);
+		return (0);
 	if (init_table(&table, &config) == 0)
 	{
 		fprintf(stderr, "Error: initialization failed\n");

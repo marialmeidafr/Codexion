@@ -6,7 +6,7 @@
 /*   By: mariaalm <mariaalm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/09/21 16:17:26 by mariaalm          #+#    #+#             */
-/*   Updated: 2026/09/21 16:48:46 by mariaalm         ###   ########.fr       */
+/*   Updated: 2026/09/23 12:00:55 by mariaalm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ void	do_compile(t_coder *coder)
 		return ;
 	}
 	pthread_mutex_unlock(&coder->table->simulation_mutex);
-	log_state(coder->table, coder->id_coder, "is compiling");
-	pthread_mutex_lock(&coder->mutex_compile);
-	coder->last_compile_start = get_timestamp_ms();
-	pthread_mutex_unlock(&coder->mutex_compile);
 	usleep(coder->config->time_to_compile * 1000);
 	release_dongles(coder);
 	pthread_mutex_lock(&coder->mutex_compile);
